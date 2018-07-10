@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Cryptogiphy</title>
+        <link rel="stylesheet" type="text/css" href="main.css">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <script src="./node_modules/web3/dist/web3.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+
+            <h1>Cryptogiphy</h1>
+            <div>
+                <div id="create-giphtoken">
+                    <label for="url" class="col-lg-2">Giphtoken Url</label>
+                    <input id="url" type="text">
+                    <button id="button">Add Giphtoken</button>
+                </div>
+                <div id="giphtokens-list">
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+        <script>
+            if (typeof web3 !== 'undefined') {
+                web3 = new Web3(web3.currentProvider);
+            } else {
+                web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+            }
+
+
+            web3.eth.defaultAccount = web3.eth.accounts[0];
+            console.log(web3.eth.defaultAccount);
+
+            var CryptogiphyContract = web3.eth.contract([
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "_interfaceID",
+                            "type": "bytes4"
+                        }
+                    ],
+                    "name": "supportsInterface",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "giphtokenIndexToApproved",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "name",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "string"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_to",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_tokenId",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "approve",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "_id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "getGiphtoken",
+                    "outputs": [
+                        {
+                            "name": "url",
+                            "type": "string"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "totalSupply",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_from",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_to",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_tokenId",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "transferFrom",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_giphtokenId",
+                            "type": "uint256"
+                        },
+                        {
+                            "name": "_startingPrice",
+                            "type": "uint256"
+                        },
+                        {
+                            "name": "_endingPrice",
+                            "type": "uint256"
+                        },
+                        {
+                            "name": "_duration",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "createSaleAuction",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "INITIAL_SALE_AUCTION_DURATION",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "giphtokensCreatedCount",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "_tokenId",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "ownerOf",
+                    "outputs": [
+                        {
+                            "name": "owner",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_address",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setSaleAuctionAddress",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "_owner",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "balanceOf",
+                    "outputs": [
+                        {
+                            "name": "count",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_url",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "createGiphtokenAndAuction",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "_owner",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "tokensOfOwner",
+                    "outputs": [
+                        {
+                            "name": "ownerTokens",
+                            "type": "uint256[]"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "giphtokenIndexToOwner",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [],
+                    "name": "withdrawAuctionBalances",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "INITIAL_SALE_STARTING_PRICE",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "symbol",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "string"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "name": "_to",
+                            "type": "address"
+                        },
+                        {
+                            "name": "_tokenId",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "transfer",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "contractOwnerAddress",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "saleAuction",
+                    "outputs": [
+                        {
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "name": "from",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "name": "to",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "name": "tokenId",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "Transfer",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "name": "owner",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "name": "approved",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "name": "tokenId",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "Approval",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "name": "owner",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "name": "giphtokenId",
+                            "type": "uint256"
+                        },
+                        {
+                            "indexed": false,
+                            "name": "url",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "GiphtokenCreated",
+                    "type": "event"
+                }
+            ]);
+
+            var Cryptogiphy = CryptogiphyContract.at("0x8f1922e46424f15952f1d3c5aa8f00b4103a5a74");
+            
+            console.log(Cryptogiphy.name());
+            console.log(Cryptogiphy.getGiphtoken(0));
+
+            var displayInventory =  function() {
+                $("#giphtokens-list").empty();
+                var tokenCount = (Cryptogiphy.totalSupply().c[0]);
+                for (var i = 0; i < tokenCount; i++) {
+                    var giphyUrl = Cryptogiphy.getGiphtoken(i);
+                    console.log(giphyUrl);
+                    var rank = i + 1;
+                    $("#giphtokens-list").append("<div id='" + i + "'style='display: inline-block; margin: 20px; vertical-align: top;'><img src='" + giphyUrl + "'></br>")
+                }
+            };
+
+            $("#button").click(function() {
+                Cryptogiphy.createGiphtokenAndAuction($("#url").val(), function(err, res) {
+                    if (err) {
+                        console.log("we got a create giphtoken error");
+                    }
+                });
+            });
+
+            function hex2a(hexx) {
+                var hex = hexx.toString();//force conversion
+                var str = '';
+                for (var i = 2; (i < hex.length && hex.substr(i, 2) !== '00'); i += 2)
+                    str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+                return str;
+            }
+
+            displayInventory();
+
+            // var rankState = overallRank;
+            // var racerSelector;
+
+            // displayInventory(overallRank);
+
+            // var updateSpeedEvent = Cryptogiphy.updateSpeed();
+            // var updateFuriosityEvent = Cryptogiphy.updateFuriosity();
+
+            // updateSpeedEvent.watch(function(error, result) {
+            //     if (!error) {
+            //         displayInventory(rankState);
+            //     } else {
+            //         console.log(error);
+            //     }
+            // });
+
+            // updateFuriosityEvent.watch(function(error, result) {
+            //     if (!error) {
+            //         displayInventory(rankState);
+            //     } else {
+            //         console.log(error);
+            //     }
+            // });
+
+            // $("#giphtokens-list").on("click", ".increase-speed", function() {
+            //     var tokenId = Number($(this).closest('div').attr('id'));
+            //     Cryptogiphy.increaseSpeed(tokenId);
+            // });
+
+            // $("#giphtokens-list").on("click", ".increase-furiosity", function() {
+            //     var tokenId = Number($(this).closest('div').attr('id'));
+            //     Cryptogiphy.increaseFuriosity(tokenId);
+            // });
+
+            // $("#giphtokens-list").on("click", ".decrease-speed", function() {
+            //     var tokenId = Number($(this).closest('div').attr('id'));
+            //     Cryptogiphy.decreaseSpeed(tokenId);
+            // });
+
+            // $("#giphtokens-list").on("click", ".decrease-furiosity", function() {
+            //     var tokenId = Number($(this).closest('div').attr('id'));
+            //     Cryptogiphy.decreaseFuriosity(tokenId);
+            // });
+
+            // $("#overall").click(function() {
+            //     rankState = overallRank;
+            //     $(".btn-success").addClass('btn-secondary').removeClass('btn-success');
+            //     $(this).addClass('btn-success').removeClass('btn-secondary');
+            //     displayInventory(rankState);
+            // });
+
+            // $("#by-speed").click(function() {
+            //     rankState = rankBySpeed
+            //     $(".btn-success").addClass('btn-secondary').removeClass('btn-success');
+            //     $(this).addClass('btn-success').removeClass('btn-secondary');
+            //     displayInventory(rankState);
+            // });
+
+            // $("#by-furiosity").click(function() {
+            //     rankState = rankByFuriosity
+            //     $(".btn-success").addClass('btn-secondary').removeClass('btn-success');
+            //     $(this).removeClass('btn-secondary').addClass('btn-success');
+            //     displayInventory(rankState);
+            // });
+
+        </script>
+    </body>
+</html>

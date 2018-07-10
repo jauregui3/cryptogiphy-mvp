@@ -1,0 +1,31 @@
+body {
+    background-color: #f0F0F0;
+    padding: 2em;
+    font-family: 'Raleway', 'Source Sans Pro', 'Arial';
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+h3 { 
+    display: inline;
+}
+
+.rank-button {
+    text-align: center;
+    margin: 40px 20px;
+}
+
+.btn-danger {
+    margin: 0 20px;
+}
+
+.btn-warning {
+    /* margin: 10px; */
+}
