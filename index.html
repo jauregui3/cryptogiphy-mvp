@@ -12,10 +12,12 @@
     <body>
         <div class="container">
 
-            <h1>Cryptogiphy</h1>
+            <h1>Fast and Furious Gifs</h1>
             <div>
                 <div>
-                    <button id="refresh-button">Refresh</button>
+                    <button id="overall" class="btn btn-success rank-button">Fast and Furious</button>
+                    <button id="by-speed" class="btn btn-secondary rank-button">Fastest</button>
+                    <button id="by-furiosity" class="btn btn-secondary rank-button">Most Furious</button>
                 </div>
                 <div id="giphtokens-list">
                 </div>
@@ -36,485 +38,623 @@
             console.log(web3.eth.defaultAccount);
 
             var CryptogiphyContract = web3.eth.contract([
-                {
-                    "constant": true,
-                    "inputs": [],
-                    "name": "name",
-                    "outputs": [
-                        {
-                            "name": "",
-                            "type": "string"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [
-                        {
-                            "name": "_tokenId",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "getApproved",
-                    "outputs": [
-                        {
-                            "name": "",
-                            "type": "address"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": false,
-                    "inputs": [
-                        {
-                            "name": "_to",
-                            "type": "address"
-                        },
-                        {
-                            "name": "_tokenId",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "approve",
-                    "outputs": [],
-                    "payable": false,
-                    "stateMutability": "nonpayable",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [],
-                    "name": "totalSupply",
-                    "outputs": [
-                        {
-                            "name": "",
-                            "type": "uint256"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": false,
-                    "inputs": [
-                        {
-                            "name": "_from",
-                            "type": "address"
-                        },
-                        {
-                            "name": "_to",
-                            "type": "address"
-                        },
-                        {
-                            "name": "_tokenId",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "transferFrom",
-                    "outputs": [],
-                    "payable": false,
-                    "stateMutability": "nonpayable",
-                    "type": "function"
-                },
-                {
-                    "constant": false,
-                    "inputs": [
-                        {
-                            "name": "_from",
-                            "type": "address"
-                        },
-                        {
-                            "name": "_to",
-                            "type": "address"
-                        },
-                        {
-                            "name": "_tokenId",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "safeTransferFrom",
-                    "outputs": [],
-                    "payable": false,
-                    "stateMutability": "nonpayable",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [
-                        {
-                            "name": "",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "giphtokens",
-                    "outputs": [
-                        {
-                            "name": "url",
-                            "type": "string"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [
-                        {
-                            "name": "_tokenId",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "exists",
-                    "outputs": [
-                        {
-                            "name": "",
-                            "type": "bool"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [
-                        {
-                            "name": "_tokenId",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "ownerOf",
-                    "outputs": [
-                        {
-                            "name": "",
-                            "type": "address"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [
-                        {
-                            "name": "_owner",
-                            "type": "address"
-                        }
-                    ],
-                    "name": "balanceOf",
-                    "outputs": [
-                        {
-                            "name": "",
-                            "type": "uint256"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [],
-                    "name": "owner",
-                    "outputs": [
-                        {
-                            "name": "",
-                            "type": "address"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [],
-                    "name": "symbol",
-                    "outputs": [
-                        {
-                            "name": "",
-                            "type": "string"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": false,
-                    "inputs": [
-                        {
-                            "name": "_to",
-                            "type": "address"
-                        },
-                        {
-                            "name": "_approved",
-                            "type": "bool"
-                        }
-                    ],
-                    "name": "setApprovalForAll",
-                    "outputs": [],
-                    "payable": false,
-                    "stateMutability": "nonpayable",
-                    "type": "function"
-                },
-                {
-                    "constant": false,
-                    "inputs": [
-                        {
-                            "name": "_from",
-                            "type": "address"
-                        },
-                        {
-                            "name": "_to",
-                            "type": "address"
-                        },
-                        {
-                            "name": "_tokenId",
-                            "type": "uint256"
-                        },
-                        {
-                            "name": "_data",
-                            "type": "bytes"
-                        }
-                    ],
-                    "name": "safeTransferFrom",
-                    "outputs": [],
-                    "payable": false,
-                    "stateMutability": "nonpayable",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [
-                        {
-                            "name": "",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "giphyIndexToApproved",
-                    "outputs": [
-                        {
-                            "name": "",
-                            "type": "address"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": false,
-                    "inputs": [
-                        {
-                            "name": "_url",
-                            "type": "string"
-                        }
-                    ],
-                    "name": "createGiphtoken",
-                    "outputs": [],
-                    "payable": false,
-                    "stateMutability": "nonpayable",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [
-                        {
-                            "name": "",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "giphyIndexToOwner",
-                    "outputs": [
-                        {
-                            "name": "",
-                            "type": "address"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [
-                        {
-                            "name": "_owner",
-                            "type": "address"
-                        },
-                        {
-                            "name": "_operator",
-                            "type": "address"
-                        }
-                    ],
-                    "name": "isApprovedForAll",
-                    "outputs": [
-                        {
-                            "name": "",
-                            "type": "bool"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "anonymous": false,
-                    "inputs": [
-                        {
-                            "indexed": true,
-                            "name": "_from",
-                            "type": "address"
-                        },
-                        {
-                            "indexed": true,
-                            "name": "_to",
-                            "type": "address"
-                        },
-                        {
-                            "indexed": true,
-                            "name": "_tokenId",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "Transfer",
-                    "type": "event"
-                },
-                {
-                    "anonymous": false,
-                    "inputs": [
-                        {
-                            "indexed": true,
-                            "name": "_owner",
-                            "type": "address"
-                        },
-                        {
-                            "indexed": true,
-                            "name": "_approved",
-                            "type": "address"
-                        },
-                        {
-                            "indexed": true,
-                            "name": "_tokenId",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "Approval",
-                    "type": "event"
-                },
-                {
-                    "anonymous": false,
-                    "inputs": [
-                        {
-                            "indexed": true,
-                            "name": "_owner",
-                            "type": "address"
-                        },
-                        {
-                            "indexed": true,
-                            "name": "_operator",
-                            "type": "address"
-                        },
-                        {
-                            "indexed": false,
-                            "name": "_approved",
-                            "type": "bool"
-                        }
-                    ],
-                    "name": "ApprovalForAll",
-                    "type": "event"
-                }
-            ]);
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "getApproved",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "approve",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "transferFrom",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "safeTransferFrom",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "giphtokens",
+		"outputs": [
+			{
+				"name": "url",
+				"type": "string"
+			},
+			{
+				"name": "speed",
+				"type": "uint256"
+			},
+			{
+				"name": "furiosity",
+				"type": "uint256"
+			},
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "exists",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "ownerOf",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_owner",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "symbol",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "decreaseSpeed",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "_approved",
+				"type": "bool"
+			}
+		],
+		"name": "setApprovalForAll",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "_tokenId",
+				"type": "uint256"
+			},
+			{
+				"name": "_data",
+				"type": "bytes"
+			}
+		],
+		"name": "safeTransferFrom",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_url",
+				"type": "string"
+			},
+			{
+				"name": "_speed",
+				"type": "uint256"
+			},
+			{
+				"name": "_furiosity",
+				"type": "uint256"
+			}
+		],
+		"name": "createGiphtoken",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "giphyIndexToApproved",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "decreaseFuriosity",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "giphyIndexToOwner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "increaseFuriosity",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"name": "_operator",
+				"type": "address"
+			}
+		],
+		"name": "isApprovedForAll",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "increaseSpeed",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "tokenId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "speed",
+				"type": "uint256"
+			}
+		],
+		"name": "updateSpeed",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "tokenId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "furiosity",
+				"type": "uint256"
+			}
+		],
+		"name": "updateFuriosity",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "_approved",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "Approval",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "_operator",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_approved",
+				"type": "bool"
+			}
+		],
+		"name": "ApprovalForAll",
+		"type": "event"
+	}
+]);
 
-            var Cryptogiphy = CryptogiphyContract.at("0x4ea267cbc2be987ef0461ac12b2b9a33ffaa3005");
+            var Cryptogiphy = CryptogiphyContract.at("0x6c908328d8050828bc00de8fd2c525fcdac95e0f");
             
-            var displayInventory =  function() {
+            var rankBySpeed = function(giphtokens) {
+                return giphtokens.sort(function(a, b) {
+                    return b[1].c[0] - a[1].c[0];
+                }) 
+            }
+
+            var rankByFuriosity = function(giphtokens) {
+                return giphtokens.sort(function(a, b) {
+                    return b[2].c[0] - a[2].c[0];
+                }) 
+            }
+
+            var overallRank = function(giphtokens) {
+                return giphtokens.sort(function(a, b) {
+                    return (b[1].c[0] + b[2].c[0]) - (a[1].c[0] + a[2].c[0]);
+                }) 
+            }
+
+            var rankState = overallRank;
+
+            var displayInventory =  function(rank) {
+                console.log(rank);
                 $("#giphtokens-list").empty();
                 var tokenCount = (Cryptogiphy.totalSupply().c[0]);
+                var giphtokens = [];
                 for (var i = 0; i < tokenCount; i++) {
-                    var giphyUrl = Cryptogiphy.giphtokens(i);
-                    $("#giphtokens-list").append("<div id='" + i + "'style='display: inline-block; margin: 20px; vertical-align: top;'><img src='" + giphyUrl + "'></br>")
+                    giphtokens.push(Cryptogiphy.giphtokens(i));
+                }
+                giphtokens = rank(giphtokens);
+                for (var i = 0; i < giphtokens.length; i++) {
+                    var rank = i + 1;
+                    var giphtoken = giphtokens[i];
+                    console.log(giphtokens[i]);
+                    $("#giphtokens-list").append("<div id='" + giphtoken[3] + "'style='display: inline-block; margin: 20px; vertical-align: top;'><h2>" + rank +  ":</h2><img src='" + giphtoken[0] + "'></br><div style='display: inline-block; margin: 20px 0;'>Speed: " + giphtoken[1].c[0] + "</div><button class='btn btn-danger increase-speed'>NOS</button><button class='btn btn-warning decrease-speed'>Pump the Brakes</button></br><div style='display: inline-block; margin: 20px 0;'>Furiosity: " + giphtoken[2].c[0] + "</div><button class='btn btn-danger increase-furiosity'>Rile Up</button><button class='btn btn-warning decrease-furiosity'>Calm Down</button>")
                 }
             };
 
-            displayInventory();
+            // displayInventory();
 
-            // var rankState = overallRank;
-            // displayInventory(overallRank);
+            displayInventory(rankState);
 
-            // var updateSpeedEvent = Cryptogiphy.updateSpeed();
-            // var updateFuriosityEvent = Cryptogiphy.updateFuriosity();
 
-            // updateSpeedEvent.watch(function(error, result) {
-            //     if (!error) {
-            //         displayInventory();
-            //     } else {
-            //         console.log(error);
-            //     }
-            // });
+            var updateSpeedEvent = Cryptogiphy.updateSpeed();
+            var updateFuriosityEvent = Cryptogiphy.updateFuriosity();
 
-            // updateFuriosityEvent.watch(function(error, result) {
-            //     if (!error) {
-            //         displayInventory();
-            //     } else {
-            //         console.log(error);
-            //     }
-            // });
-
-            // $("#giphtokens-list").on("click", ".increase-speed", function() {
-            //     var tokenId = Number($(this).closest('div').attr('id'));
-            //     Cryptogiphy.increaseSpeed(tokenId);
-            // });
-
-            // $("#giphtokens-list").on("click", ".increase-furiosity", function() {
-            //     var tokenId = Number($(this).closest('div').attr('id'));
-            //     Cryptogiphy.increaseFuriosity(tokenId);
-            // });
-
-            // $("#giphtokens-list").on("click", ".decrease-speed", function() {
-            //     var tokenId = Number($(this).closest('div').attr('id'));
-            //     Cryptogiphy.decreaseSpeed(tokenId);
-            // });
-
-            // $("#giphtokens-list").on("click", ".decrease-furiosity", function() {
-            //     var tokenId = Number($(this).closest('div').attr('id'));
-            //     Cryptogiphy.decreaseFuriosity(tokenId);
-            // });
-
-            $("#refresh-button").click(function() {
-                displayInventory();
+            updateSpeedEvent.watch(function(error, result) {
+                if (!error) {
+                    displayInventory(rankState);
+                } else {
+                    console.log(error);
+                }
             });
 
-            // $("#overall").click(function() {
-            //     rankState = overallRank;
-            //     $(".btn-success").addClass('btn-secondary').removeClass('btn-success');
-            //     $(this).addClass('btn-success').removeClass('btn-secondary');
-            //     displayInventory(rankState);
-            // });
+            updateFuriosityEvent.watch(function(error, result) {
+                if (!error) {
+                    displayInventory(rankState);
+                } else {
+                    console.log(error);
+                }
+            });
 
-            // $("#by-speed").click(function() {
-            //     rankState = rankBySpeed
-            //     $(".btn-success").addClass('btn-secondary').removeClass('btn-success');
-            //     $(this).addClass('btn-success').removeClass('btn-secondary');
-            //     displayInventory(rankState);
-            // });
+            $("#giphtokens-list").on("click", ".increase-speed", function() {
+                var tokenId = Number($(this).closest('div').attr('id'));
+                Cryptogiphy.increaseSpeed(tokenId);
+            });
 
-            // $("#by-furiosity").click(function() {
-            //     rankState = rankByFuriosity
-            //     $(".btn-success").addClass('btn-secondary').removeClass('btn-success');
-            //     $(this).removeClass('btn-secondary').addClass('btn-success');
-            //     displayInventory(rankState);
-            // });
+            $("#giphtokens-list").on("click", ".increase-furiosity", function() {
+                var tokenId = Number($(this).closest('div').attr('id'));
+                Cryptogiphy.increaseFuriosity(tokenId);
+            });
+
+            $("#giphtokens-list").on("click", ".decrease-speed", function() {
+                var tokenId = Number($(this).closest('div').attr('id'));
+                Cryptogiphy.decreaseSpeed(tokenId);
+            });
+
+            $("#giphtokens-list").on("click", ".decrease-furiosity", function() {
+                var tokenId = Number($(this).closest('div').attr('id'));
+                Cryptogiphy.decreaseFuriosity(tokenId);
+            });
+
+            $("#refresh-button").click(function() {
+                displayInventory(rankState);
+            });
+
+            $("#overall").click(function() {
+                rankState = overallRank;
+                $(".btn-success").addClass('btn-secondary').removeClass('btn-success');
+                $(this).addClass('btn-success').removeClass('btn-secondary');
+                displayInventory(rankState);
+            });
+
+            $("#by-speed").click(function() {
+                rankState = rankBySpeed
+                $(".btn-success").addClass('btn-secondary').removeClass('btn-success');
+                $(this).addClass('btn-success').removeClass('btn-secondary');
+                displayInventory(rankState);
+            });
+
+            $("#by-furiosity").click(function() {
+                rankState = rankByFuriosity
+                $(".btn-success").addClass('btn-secondary').removeClass('btn-success');
+                $(this).removeClass('btn-secondary').addClass('btn-success');
+                displayInventory(rankState);
+            });
 
         </script>
     </body>
